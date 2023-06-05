@@ -4,7 +4,7 @@ const { SuccessResponse, ErrorResponse } = require('../utils/common');
 
 async function createBooking(req, res) {
     try {
-        console.log("body : ", req.body);
+        //console.log("body : ", req.body);
         const response = await BookingService.createBooking({
             flightId: req.body.flightId,
             userId: req.body.userId,
@@ -15,6 +15,7 @@ async function createBooking(req, res) {
                 .status(StatusCodes.OK)
                 .json(SuccessResponse);
     } catch (error) {
+        //console.log(error)
         ErrorResponse.error = error;
         return res
                 .status(error.statusCode)
