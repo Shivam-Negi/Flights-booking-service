@@ -13,6 +13,9 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/api', apiRoutes);
 
+// proxy middleware
+app.use('/bookingService/api', apiRoutes);
+
 app.listen(ServerConfig.PORT, () => {
     console.log(`successfully started the server on PORT : ${ServerConfig.PORT}`);
     CRON();
