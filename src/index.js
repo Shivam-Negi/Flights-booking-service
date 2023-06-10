@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { ServerConfig } = require('./config');
+const { ServerConfig, Queue } = require('./config');
 
 const apiRoutes = require('./routes');
 
@@ -16,8 +16,10 @@ app.use('/api', apiRoutes);
 // proxy middleware
 app.use('/bookingService/api', apiRoutes);
 
-app.listen(ServerConfig.PORT, () => {
+app.listen(ServerConfig.PORT, async () => {
     console.log(`successfully started the server on PORT : ${ServerConfig.PORT}`);
     CRON();
+    await Queue.connectQueue();
+    console.log('queue connected');
 })
 //console.log(process.env)
