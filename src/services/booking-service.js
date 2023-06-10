@@ -59,8 +59,11 @@ async function makePayment(data) {
         }
         // we assume here that the payment is successful
         await bookingRepository.update(data.bookingId, {status: BOOKED}, transaction);
+
+        const recepientEmail = await axios.get(`${ServerConfig.USER_SERVICE}/api/v1/user/${bookingDetails.userId}`);
+        console.log("recepientEmail is : ", typeof recepientEmail.data.data.email.toString());
         Queue.sendData({
-            recepientEmail: 'shibunegi122@gmail.com',
+            recepientEmail: recepientEmail.data.data.email.toString(),
             subject: 'Flight booked',
             text: `Booking successfully done for the booking ${data.bookingId}`
         });
